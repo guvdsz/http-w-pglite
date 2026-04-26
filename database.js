@@ -6,7 +6,7 @@ export const db = new PGlite("./db");
 export async function runDb() {
 	await db.exec(`
         CREATE TABLE IF NOT EXISTS tasks (
-            id SERIAL PRIMARY KEY,
+            id INCREMENTAL PRIMARY KEY,
             title TEXT,
             description TEXT,
             done BOOLEAN
