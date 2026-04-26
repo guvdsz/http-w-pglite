@@ -12,30 +12,18 @@ export async function getJsonBody(req, res) {
 	try {
 		return JSON.parse(body);
 	} catch {
-		res.setHeader("Content-Type", "application/json");
-		res.statusCode = 400;
-		res.end(JSON.stringify({ error: "Invalid JSON body" }));
-		return null;
+		sendJson(400, res, { error: "Invalid JSON body" });
 	}
 }
 
-export async function getQueryParams(req, res) {
-	let body = "";
+export function sendJson(status, res, data) {
+	res.statusCode = status;
+	res.setHeader("Content-Type", "application/json");
+	return res.end(JSON.stringify(data));
+}
 
-	for await (const chunk of req) {
-		body += chunk.toString();
-	}
+export function getPathParams(req) {
+	const param = req?.url?.split("/")?.pop() || null;
 
-	if (!body) {
-		return {};
-	}
-
-	try {
-		return JSON.parse(body);
-	} catch {
-		res.setHeader("Content-Type", "application/json");
-		res.statusCode = 400;
-		res.end(JSON.stringify({ error: "Invalid JSON body" }));
-		return null;
-	}
+	return param;
 }
