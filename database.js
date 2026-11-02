@@ -1,10 +1,9 @@
 import { PGlite } from "@electric-sql/pglite";
-import fs from "fs";
 
 export const db = new PGlite("./db");
 
 export async function runDb() {
-	await db.exec(`
+    await db.exec(`
         CREATE TABLE IF NOT EXISTS tasks (
             id INCREMENTAL PRIMARY KEY,
             title TEXT,
